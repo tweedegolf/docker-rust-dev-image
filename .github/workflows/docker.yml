@@ -21,6 +21,7 @@ jobs:
     uses: "tweedegolf/actions-container-helpers/.github/workflows/container-image.yml@main"
     with:
         push: ${{ github.ref == 'refs/heads/main' }}
+        platforms: "linux/amd64,linux/arm64"
         build-args: |
           RUSTUP_VERSION=1.27.0
           RUSTUP_SHA256_AMD64=a3d541a5484c8fa2f1c21478a6f6c505a778d473c21d60a18a4df5185d320ef8

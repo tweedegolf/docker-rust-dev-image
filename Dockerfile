@@ -1,4 +1,4 @@
-FROM docker.tgrep.nl/docker/debian:bookworm
+FROM ghcr.io/tweedegolf/debian:bookworm
 
 RUN set -eux; \
     apt-get update; \

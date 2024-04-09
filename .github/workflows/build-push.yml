@@ -1,0 +1,17 @@
+name: Build and push
+
+permissions:
+  contents: read
+  packages: write
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '15 2 * * SUN'
+
+jobs:
+  build-and-push:
+    uses: ./.github/workflows/docker.yml
+    secrets: inherit

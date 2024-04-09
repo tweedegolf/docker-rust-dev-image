@@ -33,8 +33,8 @@ jobs:
           SCCACHE_SHA256_AMD64=ed0010b4dcaccce42b9dc8699257134a113d0ca16dfb7db890356135218322c9
           SCCACHE_SHA256_ARM64=e7ecabac9a703e53a8b06e84b0058fcf242239d164050537bc399387160320fb
           CARGO_UDEPS_VERSION=0.1.47
-          CARGO_UDEPS_SHA256_AMD64=d98267271652f87c3516bf8623ebd86a3afcada304714e47cacdb0a96bb6df0c
-          CARGO_UDEPS_SHA256_ARM64=445c6ef1325d247a1e31481d34ecdd5a7ae87f702aff40cfa9dd8ce2ea8f2783
+          CARGO_UDEPS_SHA256_AMD64=906d6f7292231b79d2db04ab04d5e188b6ac789bce7fbb3013130edb82f683c9
+          CARGO_UDEPS_SHA256_ARM64=b242da4b7c24c647e210fbacabafe7dd86161d04e261bd81ed07a0a466a06fee
           RUST_VERSION=${{matrix.version}}
         tags: |
             ghcr.io/tweedegolf/rust-dev:${{matrix.version}}

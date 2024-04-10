@@ -24,7 +24,14 @@ RUN set -eux; \
         crossbuild-essential-amd64 \
         crossbuild-essential-arm64 \
     ; \
-    rm -rf /var/lib/apt/lists/*;
+    rm -rf /var/lib/apt/lists/*; \
+    dpkgArch="$(dpkg --print-architecture)"; \
+    case "${dpkgArch##*-}" in \
+        amd64) ln -s /usr/lib/x86_64-linux-gnu/libmysqlclient.so /usr/lib/x86_64-linux-gnu/libmysqlclient.so.21 ;; \
+        arm64) ln -s /usr/lib/aarch64-linux-gnu/libmysqlclient.so /usr/lib/aarch64-linux-gnu/libmysqlclient.so.21 ;; \
+        *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \
+    esac
+
 
 ARG RUSTUP_VERSION
 ENV RUSTUP_VERSION ${RUSTUP_VERSION}

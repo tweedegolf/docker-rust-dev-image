@@ -122,8 +122,8 @@ RUN set -eux; \
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
-        amd64) set -- --target x86_64-unknown-linux-gnu --target x86_64-unknown-linux-musl ;; \
-        arm64) set -- --target aarch64-unknown-linux-gnu --target aarch64-unknown-linux-musl ;; \
+        amd64) set -- --targets x86_64-unknown-linux-gnu --targets x86_64-unknown-linux-musl ;; \
+        arm64) set -- --targets aarch64-unknown-linux-gnu --targets aarch64-unknown-linux-musl ;; \
         *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \
     esac; \
     cargo binstall "$@" --no-confirm \

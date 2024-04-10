@@ -132,6 +132,7 @@ RUN set -eux; \
         cargo-outdated \
         cargo-bloat \
         cargo-llvm-lines \
+        cargo-llvm-cov \
         cargo-watch \
         cargo-edit \
         cargo-chef \
@@ -140,7 +141,8 @@ RUN set -eux; \
         trunk \
         mdbook \
         wasm-bindgen-cli \
-        sqlx-cli; \
+        sqlx-cli \
+        diesel_cli; \
     sqlx --version; \
     wasm-bindgen --version; \
     mdbook --version; \
@@ -150,9 +152,11 @@ RUN set -eux; \
     cargo chef --version; \
     cargo upgrade --version; \
     cargo llvm-lines --version; \
+    cargo llvm-cov --version; \
     cargo bloat --version; \
     cargo outdated --version; \
-    cargo audit --version;
+    cargo audit --version; \
+    disel --version; \
 
 ARG CARGO_UDEPS_VERSION
 ENV CARGO_UDEPS_VERSION ${CARGO_UDEPS_VERSION}

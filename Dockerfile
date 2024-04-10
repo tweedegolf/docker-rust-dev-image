@@ -122,11 +122,11 @@ RUN set -eux; \
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
-        amd64) installArchs=(--target x86_64-unknown-linux-gnu --target x86_64-unknown-linux-musl) ;; \
-        arm64) installArchs=(--target aarch64-unknown-linux-gnu --target aarch64-unknown-linux-musl) ;; \
+        amd64) set -- --target x86_64-unknown-linux-gnu --target x86_64-unknown-linux-musl ;; \
+        arm64) set -- --target aarch64-unknown-linux-gnu --target aarch64-unknown-linux-musl ;; \
         *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \
     esac; \
-    cargo binstall "${installArchs[@]}" --no-confirm \
+    cargo binstall "$@" --no-confirm \
         cargo-quickinstall \
         cargo-audit \
         cargo-outdated \

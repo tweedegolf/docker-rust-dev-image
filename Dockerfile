@@ -19,19 +19,11 @@ RUN set -eux; \
         libssl-dev \
         libpq-dev \
         libsqlite3-dev \
-        default-libmysqlclient-dev \
         binaryen \
         crossbuild-essential-amd64 \
         crossbuild-essential-arm64 \
     ; \
-    rm -rf /var/lib/apt/lists/*; \
-    dpkgArch="$(dpkg --print-architecture)"; \
-    case "${dpkgArch##*-}" in \
-        amd64) ln -s /usr/lib/x86_64-linux-gnu/libmysqlclient.so /usr/lib/x86_64-linux-gnu/libmysqlclient.so.21 ;; \
-        arm64) ln -s /usr/lib/aarch64-linux-gnu/libmysqlclient.so /usr/lib/aarch64-linux-gnu/libmysqlclient.so.21 ;; \
-        *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \
-    esac
-
+    rm -rf /var/lib/apt/lists/*;
 
 ARG RUSTUP_VERSION
 ENV RUSTUP_VERSION ${RUSTUP_VERSION}
@@ -150,7 +142,7 @@ RUN set -eux; \
         mdbook \
         wasm-bindgen-cli \
         sqlx-cli \
-        diesel_cli; \
+    ; \
     sqlx --version; \
     wasm-bindgen --version; \
     mdbook --version; \
@@ -163,8 +155,7 @@ RUN set -eux; \
     cargo llvm-cov --version; \
     cargo bloat --version; \
     cargo outdated --version; \
-    cargo audit --version; \
-    diesel --version; \
+    cargo audit --version;
 
 ARG CARGO_UDEPS_VERSION
 ENV CARGO_UDEPS_VERSION ${CARGO_UDEPS_VERSION}
@@ -194,4 +185,4 @@ RUN set -eux; \
     rm -rf "/tmp/cargo-udeps-v${CARGO_UDEPS_VERSION}-${udepsArch}.tar.gz"; \
     cargo udeps --version;
 
-# RUN cargo install diesel_cli --no-default-features --features "postgres sqlite"
+RUN cargo install diesel_cli --no-default-features --features "postgres sqlite"

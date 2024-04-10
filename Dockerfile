@@ -19,6 +19,7 @@ RUN set -eux; \
         libssl-dev \
         libpq-dev \
         libsqlite3-dev \
+        default-libmysqlclient-dev \
         binaryen \
         crossbuild-essential-amd64 \
         crossbuild-essential-arm64 \

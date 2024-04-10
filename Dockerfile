@@ -156,7 +156,7 @@ RUN set -eux; \
     cargo bloat --version; \
     cargo outdated --version; \
     cargo audit --version; \
-    disel --version; \
+    diesel --version; \
 
 ARG CARGO_UDEPS_VERSION
 ENV CARGO_UDEPS_VERSION ${CARGO_UDEPS_VERSION}

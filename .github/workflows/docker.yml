@@ -4,22 +4,31 @@ on:
   workflow_call:
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        include:
-          - version: stable
-            latest: false
-          - version: beta
-            latest: false
-          - version: nightly
-            latest: false
-          - version: 1.77
-            latest: true
-          - version: 1.76
-            latest: false
-    uses: "./.github/workflows/docker-images.yml"
-    with:
-        version: ${{ matrix.version }}
-        latest: ${{ matrix.latest }}
-        node_version: "20"
+  prebuild_binaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
+        with:
+          toolchain: stable
+          targets: x86_64-unknown-linux-gnu,aarch64-unknown-linux-gnu
+      - run: cargo install --target aarch64-unknown-linux-gnu diesel --no-default-features --features "postgres, sqlite"
+
+  # build:
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - version: stable
+  #           latest: false
+  #         - version: beta
+  #           latest: false
+  #         - version: nightly
+  #           latest: false
+  #         - version: 1.77
+  #           latest: true
+  #         - version: 1.76
+  #           latest: false
+  #   uses: "./.github/workflows/docker-images.yml"
+  #   with:
+  #       version: ${{ matrix.version }}
+  #       latest: ${{ matrix.latest }}
+  #       node_version: "20"

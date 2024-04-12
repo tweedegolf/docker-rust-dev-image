@@ -24,7 +24,8 @@ jobs:
       - name: Build diesel_cli
         run: |
           cd diesel_cli
-          cargo build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres-bundled, sqlite-bundled"
+          cat Cargo.toml
+          cargo build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite"
 
   # build:
   #   strategy:

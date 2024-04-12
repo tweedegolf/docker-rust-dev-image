@@ -64,6 +64,9 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
+COPY diesel_cli/target/$TARGETARCH/release/diesel /usr/local/cargo/bin/diesel
+COPY cargo-llvm-lines/target/$TARGETARCH/release/cargo-llvm-lines /usr/local/cargo/bin/cargo-llvm-lines
+
 ARG SCCACHE_VERSION
 ENV SCCACHE_VERSION ${SCCACHE_VERSION}
 
@@ -131,7 +134,6 @@ RUN set -eux; \
         cargo-audit \
         cargo-outdated \
         cargo-bloat \
-        cargo-llvm-lines \
         cargo-llvm-cov \
         cargo-watch \
         cargo-edit \
@@ -151,11 +153,12 @@ RUN set -eux; \
     cargo sweep --version; \
     cargo chef --version; \
     cargo upgrade --version; \
-    cargo llvm-lines --version; \
     cargo llvm-cov --version; \
     cargo bloat --version; \
     cargo outdated --version; \
-    cargo audit --version;
+    cargo audit --version; \
+    diesel --version; \
+    cargo llvm-lines --version;
 
 ARG CARGO_UDEPS_VERSION
 ENV CARGO_UDEPS_VERSION ${CARGO_UDEPS_VERSION}
@@ -184,5 +187,3 @@ RUN set -eux; \
     rm -rf "/tmp/cargo-udeps-v${CARGO_UDEPS_VERSION}-${udepsArch}/"; \
     rm -rf "/tmp/cargo-udeps-v${CARGO_UDEPS_VERSION}-${udepsArch}.tar.gz"; \
     cargo udeps --version;
-
-RUN cargo install diesel_cli --no-default-features --features "postgres sqlite"

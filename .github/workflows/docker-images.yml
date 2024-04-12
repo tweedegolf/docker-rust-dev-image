@@ -14,6 +14,7 @@ jobs:
   base:
     uses: "tweedegolf/actions-container-helpers/.github/workflows/container-image.yml@main"
     with:
+        artifact: artifact
         push: ${{ github.ref == 'refs/heads/main' }}
         platforms: "linux/amd64,linux/arm64"
         build-args: |

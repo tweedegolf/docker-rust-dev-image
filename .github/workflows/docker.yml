@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  prebuild_binaries:
+  prebuild-binaries:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
@@ -36,6 +36,8 @@ jobs:
           EOF
           cross build --release --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
           cross build --release --target x86_64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
+          mv target/aarch64-unknown-linux-gnu target/arm64
+          mv target/x86_64-unknown-linux-gnu target/amd64
 
       - name: Download and build cargo-llvm-lines
         run: |
@@ -43,34 +45,37 @@ jobs:
           cd cargo-llvm-lines
           cross build --release --target aarch64-unknown-linux-gnu
           cross build --release --target x86_64-unknown-linux-gnu
+          mv target/aarch64-unknown-linux-gnu target/arm64
+          mv target/x86_64-unknown-linux-gnu target/amd64
 
       - name: Upload artifacts
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: artifact
           path: |
-            diesel_cli/target/x86_64-unknown-linux-gnu/release/diesel
-            diesel_cli/target/aarch64-unknown-linux-gnu/release/diesel
-            cargo-llvm-lines/target/x86_64-unknown-linux-gnu/release/cargo-llvm-lines
-            cargo-llvm-lines/target/aarch64-unknown-linux-gnu/release/cargo-llvm-lines
+            diesel_cli/target/amd64/release/diesel
+            diesel_cli/target/arm64/release/diesel
+            cargo-llvm-lines/target/amd64/release/cargo-llvm-lines
+            cargo-llvm-lines/target/arm64/release/cargo-llvm-lines
           if-no-files-found: error
 
-  # build:
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - version: stable
-  #           latest: false
-  #         - version: beta
-  #           latest: false
-  #         - version: nightly
-  #           latest: false
-  #         - version: 1.77
-  #           latest: true
-  #         - version: 1.76
-  #           latest: false
-  #   uses: "./.github/workflows/docker-images.yml"
-  #   with:
-  #       version: ${{ matrix.version }}
-  #       latest: ${{ matrix.latest }}
-  #       node_version: "20"
+  build:
+    needs: [prebuild-binaries]
+    strategy:
+      matrix:
+        include:
+          - version: stable
+            latest: false
+          - version: beta
+            latest: false
+          - version: nightly
+            latest: false
+          - version: 1.77
+            latest: true
+          - version: 1.76
+            latest: false
+    uses: "./.github/workflows/docker-images.yml"
+    with:
+        version: ${{ matrix.version }}
+        latest: ${{ matrix.latest }}
+        node_version: "20"

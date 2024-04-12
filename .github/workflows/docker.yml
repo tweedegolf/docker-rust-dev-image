@@ -4,7 +4,14 @@ on:
   workflow_call:
 
 jobs:
-  prebuild-binaries:
+  prebuild-diesel:
+    strategy:
+      matrix:
+        include:
+          - rust_arch: aarch64-unknown-linux-gnu
+            docker_arch: arm64
+          - rust_arch: x86_64-unknown-linux-gnu
+            docker_arch: amd64
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
@@ -33,33 +40,52 @@ jobs:
               "apt-get update && apt-get install --assume-yes libpq-dev:amd64"
           ]
           EOF
-          cross build --release --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
-          cross build --release --target x86_64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
-          mv target/aarch64-unknown-linux-gnu target/arm64
-          mv target/x86_64-unknown-linux-gnu target/amd64
+          cross build --release --target ${{ matrix.rust_arch }} --no-default-features --features "postgres, sqlite-bundled"
+          mv target/${{ matrix.rust_arch }}/release/diesel target/diesel.${{ matrix.docker_arch }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        with:
+          name: artifact-diesel-${{ matrix.rust_arch }}
+          path: diesel_cli/target/diesel.${{ matrix.docker_arch }}
+          if-no-files-found: error
+
+  prebuild-cargo-llvm-lines:
+    strategy:
+      matrix:
+        include:
+          - rust_arch: aarch64-unknown-linux-gnu
+            docker_arch: arm64
+          - rust_arch: x86_64-unknown-linux-gnu
+            docker_arch: amd64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
+        with:
+          toolchain: stable
+
+      - name: Install development tools
+        uses: taiki-e/install-action@f8a64c940979268d3ab5ac99c178e718ed90977d # v2.32.14
+        with:
+          tool: cargo-clone,cross
 
       - name: Download and build cargo-llvm-lines
         run: |
           cargo clone cargo-llvm-lines
           cd cargo-llvm-lines
-          cross build --release --target aarch64-unknown-linux-gnu
-          cross build --release --target x86_64-unknown-linux-gnu
-          mv target/aarch64-unknown-linux-gnu target/arm64
-          mv target/x86_64-unknown-linux-gnu target/amd64
+          cross build --release --target ${{ matrix.rust_arch }}
+          mv target/${{ matrix.rust_arch }}/release/cargo-llvm-lines target/cargo-llvm-lines.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
-          name: artifact
-          path: |
-            diesel_cli/target/amd64/release/diesel
-            diesel_cli/target/arm64/release/diesel
-            cargo-llvm-lines/target/amd64/release/cargo-llvm-lines
-            cargo-llvm-lines/target/arm64/release/cargo-llvm-lines
+          name: artifact-cargo-llvm-lines-${{ matrix.rust_arch }}
+          path: cargo-llvm-lines/target/cargo-llvm-lines.${{ matrix.docker_arch }}
           if-no-files-found: error
 
   build:
-    needs: [prebuild-binaries]
+    needs: [prebuild-diesel, prebuild-cargo-llvm-lines]
     strategy:
       matrix:
         include:

@@ -1,5 +1,7 @@
 FROM ghcr.io/tweedegolf/debian:bookworm
 
+ARG TARGETARCH
+
 RUN set -eux; \
     apt-get update; \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -64,11 +66,6 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
-ARG TARGETARCH
-
-COPY diesel_cli/target/$TARGETARCH/release/diesel /usr/local/cargo/bin/diesel
-COPY cargo-llvm-lines/target/$TARGETARCH/release/cargo-llvm-lines /usr/local/cargo/bin/cargo-llvm-lines
-
 ARG SCCACHE_VERSION
 ENV SCCACHE_VERSION ${SCCACHE_VERSION}
 
@@ -124,7 +121,12 @@ RUN set -eux; \
     rm -rf "/tmp/cargo-binstall-$cargo_binstall_arch.tgz"; \
     cargo binstall -V;
 
+COPY diesel.$TARGETARCH /usr/local/cargo/bin/diesel
+COPY cargo-llvm-lines.$TARGETARCH /usr/local/cargo/bin/cargo-llvm-lines
+
 RUN set -eux; \
+    chmod +x /usr/local/cargo/bin/diesel; \
+    chmod +x /usr/local/cargo/bin/cargo-llvm-lines; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
         amd64) set -- --targets x86_64-unknown-linux-gnu --targets x86_64-unknown-linux-musl ;; \

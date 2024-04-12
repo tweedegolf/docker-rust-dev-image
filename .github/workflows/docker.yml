@@ -11,7 +11,6 @@ jobs:
         uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
         with:
           toolchain: stable
-          targets: x86_64-unknown-linux-gnu,aarch64-unknown-linux-gnu
 
       - name: Install development tools
         uses: taiki-e/install-action@f8a64c940979268d3ab5ac99c178e718ed90977d # v2.32.14

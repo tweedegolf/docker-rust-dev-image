@@ -7,14 +7,6 @@ jobs:
   prebuild_binaries:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup multi-arch for arm64 and install libpq
-        run: |
-          cat /etc/apt/sources.list
-          sudo dpkg --add-architecture arm64
-          sudo apt update || true
-          sudo apt install libpq-dev:arm64
-
-
       - name: Setup packaging tools for cross compiled artifacts
         uses: awalsh128/cache-apt-pkgs-action@a6c3917cc929dd0345bfb2d3feaf9101823370ad # v1.4.2
         with:
@@ -30,17 +22,17 @@ jobs:
       - name: Install development tools
         uses: taiki-e/install-action@f8a64c940979268d3ab5ac99c178e718ed90977d # v2.32.14
         with:
-          tool: cargo-clone
+          tool: cargo-clone,cross
 
       - name: Download diesel_cli
         run: cargo clone diesel_cli
 
       - name: Build diesel_cli
         run: |
-          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc
           cd diesel_cli
           cat Cargo.toml
-          cargo build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
+          cross build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
+          cross build --target x86_64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
 
   # build:
   #   strategy:

@@ -7,12 +7,6 @@ jobs:
   prebuild_binaries:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup packaging tools for cross compiled artifacts
-        uses: awalsh128/cache-apt-pkgs-action@a6c3917cc929dd0345bfb2d3feaf9101823370ad # v1.4.2
-        with:
-          packages: qemu-user-static crossbuild-essential-arm64
-          version: 1
-
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
         with:
@@ -31,6 +25,18 @@ jobs:
         run: |
           cd diesel_cli
           cat Cargo.toml
+          cat << EOF > Cross.toml
+          [target.x86_64-unknown-linux-gnu]
+          pre-build = [
+              "dpkg --add-architecture $CROSS_DEB_ARCH",
+              "apt-get update && apt-get install --assume-yes libpq-dev:$CROSS_DEB_ARCH"
+          ]
+          [target.aarch64-unknown-linux-gnu]
+          pre-build = [
+              "dpkg --add-architecture $CROSS_DEB_ARCH",
+              "apt-get update && apt-get install --assume-yes libpq-dev:$CROSS_DEB_ARCH"
+          ]
+          EOF
           cross build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
           cross build --target x86_64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
 

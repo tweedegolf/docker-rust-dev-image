@@ -64,6 +64,8 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
+ARG TARGETARCH
+
 COPY diesel_cli/target/$TARGETARCH/release/diesel /usr/local/cargo/bin/diesel
 COPY cargo-llvm-lines/target/$TARGETARCH/release/cargo-llvm-lines /usr/local/cargo/bin/cargo-llvm-lines
 

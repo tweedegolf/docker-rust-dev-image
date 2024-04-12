@@ -11,7 +11,20 @@ jobs:
         with:
           toolchain: stable
           targets: x86_64-unknown-linux-gnu,aarch64-unknown-linux-gnu
-      - run: cargo install --target aarch64-unknown-linux-gnu diesel_cli --no-default-features --features "postgres-bundled, sqlite-bundled"
+
+
+      - name: Install development tools
+        uses: taiki-e/install-action@f8a64c940979268d3ab5ac99c178e718ed90977d # v2.32.14
+        with:
+          tool: cargo-clone
+
+      - name: Download diesel_cli
+        run: cargo clone diesel_cli
+
+      - name: Build diesel_cli
+        run: |
+          cd diesel_cli
+          cargo build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres-bundled, sqlite-bundled"
 
   # build:
   #   strategy:

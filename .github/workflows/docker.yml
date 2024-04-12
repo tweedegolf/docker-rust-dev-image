@@ -11,7 +11,7 @@ jobs:
         run: |
           cat /etc/apt/sources.list
           sudo dpkg --add-architecture arm64
-          sudo apt update
+          sudo apt update || true
           sudo apt install libpq-dev:arm64
 
 

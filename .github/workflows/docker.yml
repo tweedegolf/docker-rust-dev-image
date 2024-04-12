@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Setup multi-arch for arm64 and install libpq
         run: |
+          cat /etc/apt/sources.list
           sudo dpkg --add-architecture arm64
           sudo apt update
           sudo apt install libpq-dev:arm64

@@ -18,23 +18,20 @@ jobs:
         with:
           tool: cargo-clone,cross
 
-      - name: Download diesel_cli
-        run: cargo clone diesel_cli
-
-      - name: Build diesel_cli
+      - name: Download and build diesel_cli
         run: |
+          cargo clone diesel_cli
           cd diesel_cli
-          cat Cargo.toml
           cat << EOF > Cross.toml
-          [target.x86_64-unknown-linux-gnu]
-          pre-build = [
-              "dpkg --add-architecture $CROSS_DEB_ARCH",
-              "apt-get update && apt-get install --assume-yes libpq-dev:$CROSS_DEB_ARCH"
-          ]
           [target.aarch64-unknown-linux-gnu]
           pre-build = [
-              "dpkg --add-architecture $CROSS_DEB_ARCH",
-              "apt-get update && apt-get install --assume-yes libpq-dev:$CROSS_DEB_ARCH"
+              "dpkg --add-architecture arm64",
+              "apt-get update && apt-get install --assume-yes libpq-dev:arm64"
+          ]
+          [target.x86_64-unknown-linux-gnu]
+          pre-build = [
+              "dpkg --add-architecture amd64",
+              "apt-get update && apt-get install --assume-yes libpq-dev:amd64"
           ]
           EOF
           cross build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"

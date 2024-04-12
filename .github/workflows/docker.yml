@@ -34,8 +34,22 @@ jobs:
               "apt-get update && apt-get install --assume-yes libpq-dev:amd64"
           ]
           EOF
-          cross build --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
-          cross build --target x86_64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
+          cross build --release --target aarch64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
+          cross build --release --target x86_64-unknown-linux-gnu --no-default-features --features "postgres, sqlite-bundled"
+
+      - name: Download and build cargo-llvm-lines
+        run: |
+          cargo clone cargo-llvm-lines
+          cd cargo-llvm-lines
+          cross build --release --target aarch64-unknown-linux-gnu
+          cross build --release --target x86_64-unknown-linux-gnu
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        with:
+          name: artifact
+          path: "*/target/*/release/{diesel,cargo-llvm-lines}"
+          if-no-files-found: error
 
   # build:
   #   strategy:

@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
+        uses: dtolnay/rust-toolchain@bb45937a053e097f8591208d8e74c90db1873d07
         with:
           toolchain: stable
 
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
+        uses: dtolnay/rust-toolchain@bb45937a053e097f8591208d8e74c90db1873d07
         with:
           toolchain: stable
 

@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
+        uses: dtolnay/rust-toolchain@d8352f6b1d2e870bc5716e7a6d9b65c4cc244a1a
         with:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@f8a64c940979268d3ab5ac99c178e718ed90977d # v2.32.14
+        uses: taiki-e/install-action@c2927f0c5b5adc6a76bc4a7847bc6e0503754bed # v2.33.22
         with:
           tool: cargo-clone,cross
 
@@ -44,7 +44,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/diesel target/diesel.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: artifact-diesel-${{ matrix.rust_arch }}
           path: diesel_cli/target/diesel.${{ matrix.docker_arch }}
@@ -61,12 +61,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@7164405e8653277d57afd42ba081b5aa02a70396
+        uses: dtolnay/rust-toolchain@d8352f6b1d2e870bc5716e7a6d9b65c4cc244a1a
         with:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@f8a64c940979268d3ab5ac99c178e718ed90977d # v2.32.14
+        uses: taiki-e/install-action@c2927f0c5b5adc6a76bc4a7847bc6e0503754bed # v2.33.22
         with:
           tool: cargo-clone,cross
 
@@ -78,7 +78,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/cargo-llvm-lines target/cargo-llvm-lines.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: artifact-cargo-llvm-lines-${{ matrix.rust_arch }}
           path: cargo-llvm-lines/target/cargo-llvm-lines.${{ matrix.docker_arch }}

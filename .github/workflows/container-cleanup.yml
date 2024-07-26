@@ -10,7 +10,9 @@ on:
     - cron: '30 2 * * MON'
 
 jobs:
-  untagged-cleanup:
-    uses: "tweedegolf/actions-helpers/.github/workflows/container-untagged-cleanup.yml@main"
-    with:
-        package: rust-dev
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "tweedegolf/cleanup-untagged-images-action@main"
+        with:
+          package: rust-dev

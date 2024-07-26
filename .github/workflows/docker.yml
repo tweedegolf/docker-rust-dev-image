@@ -117,19 +117,24 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           push: ${{ github.ref == 'refs/heads/main' }}
           platforms: "linux/amd64,linux/arm64"
+          # Rustup version extracted from docker images on https://github.com/rust-lang/docker-rust
+          # Cargo-binstall (non-full) version from https://github.com/cargo-bins/cargo-binstall/releases
+          # Sccache version from https://github.com/mozilla/sccache/releases
+          # Cargo-udeps version from https://github.com/est31/cargo-udeps/releases
+          # All packages use x86_64-unknown-linux-musl and aarch64-unknown-linux-musl
           build-args: |
             RUSTUP_VERSION=1.27.1
             RUSTUP_SHA256_AMD64=6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d
             RUSTUP_SHA256_ARM64=1cffbf51e63e634c746f741de50649bbbcbd9dbe1de363c9ecef64e278dba2b2
-            CARGO_BINSTALL_VERSION=1.6.8
-            CARGO_BINSTALL_SHA256_AMD64=581eb7c97b2767a468afb0505c416eb727b469c029b36470288fc30b26517101
-            CARGO_BINSTALL_SHA256_ARM64=2433118983ade85388be17d442b430c4932eb2dad834143f9a6a25646563281f
+            CARGO_BINSTALL_VERSION=1.8.0
+            CARGO_BINSTALL_SHA256_AMD64=8c771946367345f875634f72f10687f9fd737ac5e83cbbc2a132c1db0b3c508b
+            CARGO_BINSTALL_SHA256_ARM64=5f3c3d9cfe17fc225d2733b4ec82d002161c509cf7eb2415d2b01770bc68d0c3
             SCCACHE_VERSION=0.8.1
             SCCACHE_SHA256_AMD64=e0ee621fb16b6940666cd770b091c62cadafd3e062dd12e3a49d9caaff3b795f
             SCCACHE_SHA256_ARM64=452cef732b24415493a7c6bca6e13536eb9464593fa87c753b6b7cb4733e9c50
-            CARGO_UDEPS_VERSION=0.1.47
-            CARGO_UDEPS_SHA256_AMD64=906d6f7292231b79d2db04ab04d5e188b6ac789bce7fbb3013130edb82f683c9
-            CARGO_UDEPS_SHA256_ARM64=b242da4b7c24c647e210fbacabafe7dd86161d04e261bd81ed07a0a466a06fee
+            CARGO_UDEPS_VERSION=0.1.49
+            CARGO_UDEPS_SHA256_AMD64=8c771946367345f875634f72f10687f9fd737ac5e83cbbc2a132c1db0b3c508b
+            CARGO_UDEPS_SHA256_ARM64=5f3c3d9cfe17fc225d2733b4ec82d002161c509cf7eb2415d2b01770bc68d0c3
             RUST_VERSION=${{matrix.version}}
           tags: |
             ghcr.io/tweedegolf/rust-dev:${{matrix.version}}

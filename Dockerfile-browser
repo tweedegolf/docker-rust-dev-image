@@ -1,5 +1,5 @@
 ARG RUST_VERSION
-FROM "ghcr.io/tweedegolf/rust-dev:${RUST_VERSION}"
+FROM "ghcr.io/tweedegolf/rust-dev:${RUST_VERSION}-node"
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \

@@ -97,9 +97,9 @@ jobs:
             latest: false
           - version: nightly
             latest: false
-          - version: "1.80"
+          - version: "1.82"
             latest: true
-          - version: "1.79"
+          - version: "1.81"
             latest: false
     runs-on: ubuntu-latest
     steps:

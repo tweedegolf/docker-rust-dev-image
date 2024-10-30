@@ -7,8 +7,8 @@ to it (and install any optional library dependencies). Currently these versions
 are supported:
 
 * Rust stable: `stable` (`ghcr.io/tweedegolf/rust-dev:stable`)
-* Rust 1.80: `1.80`, `latest` (`ghcr.io/tweedegolf/rust-dev:1.80`)
-* Rust 1.79: `1.79` (`ghcr.io/tweedegolf/rust-dev:1.79`)
+* Rust 1.82: `1.82`, `latest` (`ghcr.io/tweedegolf/rust-dev:1.82`)
+* Rust 1.81: `1.81` (`ghcr.io/tweedegolf/rust-dev:1.81`)
 * Rust beta: `beta` (`ghcr.io/tweedegolf/rust-dev:beta`)
 * Rust nightly: `nightly` (`ghcr.io/tweedegolf/rust-dev:nightly`)
 

@@ -8,9 +8,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - rust_arch: aarch64-unknown-linux-gnu
+          - rust_arch: aarch64-unknown-linux-musl
             docker_arch: arm64
-          - rust_arch: x86_64-unknown-linux-gnu
+          - rust_arch: x86_64-unknown-linux-musl
             docker_arch: amd64
     runs-on: ubuntu-latest
     steps:
@@ -29,12 +29,12 @@ jobs:
           cargo clone diesel_cli
           cd diesel_cli
           cat << EOF > Cross.toml
-          [target.aarch64-unknown-linux-gnu]
+          [target.aarch64-unknown-linux-musl]
           pre-build = [
               "dpkg --add-architecture arm64",
               "apt-get update && apt-get install --assume-yes libpq-dev:arm64"
           ]
-          [target.x86_64-unknown-linux-gnu]
+          [target.x86_64-unknown-linux-musl]
           pre-build = [
               "dpkg --add-architecture amd64",
               "apt-get update && apt-get install --assume-yes libpq-dev:amd64"
@@ -54,9 +54,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - rust_arch: aarch64-unknown-linux-gnu
+          - rust_arch: aarch64-unknown-linux-musl
             docker_arch: arm64
-          - rust_arch: x86_64-unknown-linux-gnu
+          - rust_arch: x86_64-unknown-linux-musl
             docker_arch: amd64
     runs-on: ubuntu-latest
     steps:
@@ -97,9 +97,9 @@ jobs:
             latest: false
           - version: nightly
             latest: false
-          - version: "1.82"
+          - version: "1.84"
             latest: true
-          - version: "1.81"
+          - version: "1.83"
             latest: false
     runs-on: ubuntu-latest
     steps:

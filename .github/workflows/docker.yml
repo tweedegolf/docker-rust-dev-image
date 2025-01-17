@@ -87,7 +87,7 @@ jobs:
   build:
     needs: [prebuild-diesel, prebuild-cargo-llvm-lines]
     env:
-      node_version: "20"
+      node_version: "22"
     strategy:
       matrix:
         include:

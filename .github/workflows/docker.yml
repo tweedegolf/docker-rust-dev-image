@@ -28,19 +28,7 @@ jobs:
         run: |
           cargo clone diesel_cli
           cd diesel_cli
-          cat << EOF > Cross.toml
-          [target.aarch64-unknown-linux-musl]
-          pre-build = [
-              "dpkg --add-architecture arm64",
-              "apt-get update && apt-get install --assume-yes libpq-dev:arm64"
-          ]
-          [target.x86_64-unknown-linux-musl]
-          pre-build = [
-              "dpkg --add-architecture amd64",
-              "apt-get update && apt-get install --assume-yes libpq-dev:amd64"
-          ]
-          EOF
-          cross build --release --target ${{ matrix.rust_arch }} --no-default-features --features "postgres, sqlite-bundled"
+          cross build --release --target ${{ matrix.rust_arch }} --no-default-features --features "postgres-bundled, mysql-bundled, sqlite-bundled"
           mv target/${{ matrix.rust_arch }}/release/diesel target/diesel.${{ matrix.docker_arch }}
 
       - name: Upload artifacts

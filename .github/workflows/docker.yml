@@ -28,7 +28,7 @@ jobs:
         run: |
           cargo clone diesel_cli
           cd diesel_cli
-          cross build --release --target ${{ matrix.rust_arch }} --no-default-features --features "postgres-bundled, mysql-bundled, sqlite-bundled"
+          cross build --release --target ${{ matrix.rust_arch }} --no-default-features --features "postgres-bundled, sqlite-bundled"
           mv target/${{ matrix.rust_arch }}/release/diesel target/diesel.${{ matrix.docker_arch }}
 
       - name: Upload artifacts

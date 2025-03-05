@@ -85,9 +85,9 @@ jobs:
             latest: false
           - version: nightly
             latest: false
-          - version: "1.84"
+          - version: "1.85"
             latest: true
-          - version: "1.83"
+          - version: "1.84"
             latest: false
     runs-on: ubuntu-latest
     steps:
@@ -130,15 +130,15 @@ jobs:
             RUSTUP_VERSION=1.27.1
             RUSTUP_SHA256_AMD64=6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d
             RUSTUP_SHA256_ARM64=1cffbf51e63e634c746f741de50649bbbcbd9dbe1de363c9ecef64e278dba2b2
-            CARGO_BINSTALL_VERSION=1.8.0
-            CARGO_BINSTALL_SHA256_AMD64=8c771946367345f875634f72f10687f9fd737ac5e83cbbc2a132c1db0b3c508b
-            CARGO_BINSTALL_SHA256_ARM64=5f3c3d9cfe17fc225d2733b4ec82d002161c509cf7eb2415d2b01770bc68d0c3
-            SCCACHE_VERSION=0.8.1
-            SCCACHE_SHA256_AMD64=e0ee621fb16b6940666cd770b091c62cadafd3e062dd12e3a49d9caaff3b795f
-            SCCACHE_SHA256_ARM64=452cef732b24415493a7c6bca6e13536eb9464593fa87c753b6b7cb4733e9c50
-            CARGO_UDEPS_VERSION=0.1.49
-            CARGO_UDEPS_SHA256_AMD64=6560e6c3552aad9e0fc8f22e5da037dda9bf59679b24ac356e52ca3a39643cf9
-            CARGO_UDEPS_SHA256_ARM64=060fa3900ec5b6644351887b7fd649dcf89e425cb0926f704b24914474d760ce
+            CARGO_BINSTALL_VERSION=1.11.2
+            CARGO_BINSTALL_SHA256_AMD64=ea9ce8f0b4139aaa7f8cce03fb0e54f206a6a9d0b8e2e586dfae99d4a92c3fa0
+            CARGO_BINSTALL_SHA256_ARM64=e346df04a676ddfe46f4b900507d7d844a472182dd0c849c582b786be971be6a
+            SCCACHE_VERSION=0.10.0
+            SCCACHE_SHA256_AMD64=1fbb35e135660d04a2d5e42b59c7874d39b3deb17de56330b25b713ec59f849b
+            SCCACHE_SHA256_ARM64=d6a1ce4acd02b937cd61bc675a8be029a60f7bc167594c33d75732bbc0a07400
+            CARGO_UDEPS_VERSION=0.1.55
+            CARGO_UDEPS_SHA256_AMD64=63b9dd69eef610477ead31a02a8262ec321a0e0272080c8db60d547233b2b55f
+            CARGO_UDEPS_SHA256_ARM64=a7b554ce1ad67e7e2c7679496c6bc4e57e35a36be50300670314fa3879405b2a
             RUST_VERSION=${{matrix.version}}
           tags: |
             ghcr.io/tweedegolf/rust-dev:${{matrix.version}}

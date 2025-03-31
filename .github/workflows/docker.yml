@@ -20,7 +20,7 @@ jobs:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        uses: taiki-e/install-action@6aca1cfa12ef3a6b98ee8c70e0171bfa067604f5 # v2.49.39
         with:
           tool: cargo-clone,cross
 
@@ -54,7 +54,7 @@ jobs:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        uses: taiki-e/install-action@6aca1cfa12ef3a6b98ee8c70e0171bfa067604f5 # v2.49.39
         with:
           tool: cargo-clone,cross
 

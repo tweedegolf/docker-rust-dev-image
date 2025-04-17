@@ -62,7 +62,20 @@ jobs:
         run: |
           cargo clone dioxus-cli
           cd dioxus-cli
-          cross build --release --target ${{ matrix.rust_arch }}
+          cat <<- 'EOF' > Cross.toml
+          [target.x86_64-unknown-linux-musl]
+          pre-build = [
+              "dpkg --add-architecture $CROSS_DEB_ARCH",
+              "apt-get update && apt-get install --assume-yes libssl-dev:$CROSS_DEB_ARCH"
+          ]
+
+          [target.aarch64-unknown-linux-musl]
+          pre-build = [
+              "dpkg --add-architecture $CROSS_DEB_ARCH",
+              "apt-get update && apt-get install --assume-yes libssl-dev:$CROSS_DEB_ARCH"
+          ]
+          EOF
+          cross build --release --target ${{ matrix.rust_arch }} --features optimizations
           mv target/${{ matrix.rust_arch }}/release/dx target/dx.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
@@ -96,7 +109,7 @@ jobs:
         run: |
           cargo clone sqlx-cli
           cd sqlx-cli
-          cross build --release --target ${{ matrix.rust_arch }}
+          cross build --release --target ${{ matrix.rust_arch }} --no-default-features --features rustls,postgres,mysql,sqlite
           mv target/${{ matrix.rust_arch }}/release/sqlx target/sqlx.${{ matrix.docker_arch }}
           mv target/${{ matrix.rust_arch }}/release/cargo-sqlx target/cargo-sqlx.${{ matrix.docker_arch }}
 

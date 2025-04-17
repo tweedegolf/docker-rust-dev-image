@@ -62,7 +62,8 @@ jobs:
       - name: install cross compile tools
         run: |
           sudo dpkg --add-architecture ${{ matrix.docker_arch }}
-          sudo apt update && sudo apt install -y \
+          sudo apt update || true
+          sudo apt install -y \
             crossbuild-essential-${{ matrix.docker_arch }} \
             libssl-dev:${{ matrix.docker_arch }}
 

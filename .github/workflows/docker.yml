@@ -73,7 +73,8 @@ jobs:
           sudo apt update || true
           sudo apt install -y \
             crossbuild-essential-${{ matrix.docker_arch }} \
-            libssl-dev:${{ matrix.docker_arch }}
+            libssl-dev:${{ matrix.docker_arch }} \
+            liblzma-dev:${{ matrix.docker_arch }}
 
       - name: Download and build dioxus-cli
         run: |

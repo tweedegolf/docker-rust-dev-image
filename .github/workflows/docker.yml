@@ -60,10 +60,11 @@ jobs:
           tool: cargo-clone
 
       - name: install cross compile tools
-        run:
-          sudo apt update && sudo apt install -y crossbuild-essential-${{ matrix.docker_arch }}
+        run: |
           sudo dpkg --add-architecture ${{ matrix.docker_arch }}
-          sudo apt update && sudo apt install -y libssl-dev:${{ matrix.docker_arch }}
+          sudo apt update && sudo apt install -y \
+            crossbuild-essential-${{ matrix.docker_arch }} \
+            libssl-dev:${{ matrix.docker_arch }}
 
       - name: Download and build dioxus-cli
         run: |

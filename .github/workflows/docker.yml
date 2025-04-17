@@ -75,6 +75,7 @@ jobs:
               "apt-get update && apt-get install --assume-yes libssl-dev:arm64"
           ]
           EOF
+          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc
           cross build --release --target ${{ matrix.rust_arch }} --features optimizations
           mv target/${{ matrix.rust_arch }}/release/dx target/dx.${{ matrix.docker_arch }}
 

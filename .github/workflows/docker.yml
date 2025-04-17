@@ -52,39 +52,29 @@ jobs:
         uses: dtolnay/rust-toolchain@a54c7afa936fefeb4456b2dd8068152669aa8203
         with:
           toolchain: stable
+          targets: ${{ matrix.rust_arch }}
 
       - name: Install development tools
         uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
         with:
-          tool: cargo-clone,cross
+          tool: cargo-clone
+
+      - name: install cross compile tools
+        run:
+          sudo apt update && sudo apt install -y crossbuild-essential-${{ matrix.docker_arch }}
+          sudo dpkg --add-architecture ${{ matrix.docker_arch }}
+          sudo apt update && sudo apt install -y libssl-dev:${{ matrix.docker_arch }}
 
       - name: Download and build dioxus-cli
         run: |
           cargo clone dioxus-cli
           cd dioxus-cli
-          cat <<- 'EOF' > Cross.toml
-          [target.x86_64-unknown-linux-gnu]
-          pre-build = [
-              "dpkg --add-architecture amd64",
-              "apt-get update && apt-get install --assume-yes libssl-dev:amd64"
-          ]
-
-          [target.aarch64-unknown-linux-gnu]
-          pre-build = [
-              "dpkg --add-architecture arm64",
-              "apt-get update && apt-get install --assume-yes libssl-dev:arm64"
-          ]
-          EOF
-
           mkdir .cargo
-
           cat <<- 'EOF' > .cargo/config.toml
           [target.aarch64-unknown-linux-gnu]
           linker = "aarch64-linux-gnu-gcc"
           EOF
-
-          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
-          cross build --release --target ${{ matrix.rust_arch }} --features optimizations
+          cargo build --release --target ${{ matrix.rust_arch }} --features optimizations
           mv target/${{ matrix.rust_arch }}/release/dx target/dx.${{ matrix.docker_arch }}
 
       - name: Upload artifacts

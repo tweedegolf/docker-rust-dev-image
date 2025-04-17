@@ -85,9 +85,9 @@ jobs:
             latest: false
           - version: nightly
             latest: false
-          - version: "1.85"
+          - version: "1.86"
             latest: true
-          - version: "1.84"
+          - version: "1.85"
             latest: false
     runs-on: ubuntu-latest
     steps:
@@ -127,12 +127,12 @@ jobs:
           # Cargo-udeps version from https://github.com/est31/cargo-udeps/releases
           # All packages use x86_64-unknown-linux-musl and aarch64-unknown-linux-musl
           build-args: |
-            RUSTUP_VERSION=1.27.1
-            RUSTUP_SHA256_AMD64=6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d
-            RUSTUP_SHA256_ARM64=1cffbf51e63e634c746f741de50649bbbcbd9dbe1de363c9ecef64e278dba2b2
-            CARGO_BINSTALL_VERSION=1.11.2
-            CARGO_BINSTALL_SHA256_AMD64=ea9ce8f0b4139aaa7f8cce03fb0e54f206a6a9d0b8e2e586dfae99d4a92c3fa0
-            CARGO_BINSTALL_SHA256_ARM64=e346df04a676ddfe46f4b900507d7d844a472182dd0c849c582b786be971be6a
+            RUSTUP_VERSION=1.28.1
+            RUSTUP_SHA256_AMD64=a3339fb004c3d0bb9862ba0bce001861fe5cbde9c10d16591eb3f39ee6cd3e7f
+            RUSTUP_SHA256_ARM64=c64b33db2c6b9385817ec0e49a84bcfe018ed6e328fe755c3c809580cc70ce7a
+            CARGO_BINSTALL_VERSION=1.12.3
+            CARGO_BINSTALL_SHA256_AMD64=deeee17791719fc544dd1f542d4a482da70ea4ebfddf414d3ca27e5dc12242e3
+            CARGO_BINSTALL_SHA256_ARM64=7b4061abf34550ad1be68fe9f36dc9347b1edabe6275eee19b1c1c495ccb9c69
             SCCACHE_VERSION=0.10.0
             SCCACHE_SHA256_AMD64=1fbb35e135660d04a2d5e42b59c7874d39b3deb17de56330b25b713ec59f849b
             SCCACHE_SHA256_ARM64=d6a1ce4acd02b937cd61bc675a8be029a60f7bc167594c33d75732bbc0a07400

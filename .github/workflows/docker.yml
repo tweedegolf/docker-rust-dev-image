@@ -20,7 +20,7 @@ jobs:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        uses: taiki-e/install-action@09dc018eee06ae1c9e0409786563f534210ceb83 # v2.49.50
         with:
           tool: cargo-clone,cross
 
@@ -55,7 +55,7 @@ jobs:
           targets: ${{ matrix.rust_arch }}
 
       - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        uses: taiki-e/install-action@09dc018eee06ae1c9e0409786563f534210ceb83 # v2.49.50
         with:
           tool: cargo-clone
 
@@ -100,7 +100,7 @@ jobs:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        uses: taiki-e/install-action@09dc018eee06ae1c9e0409786563f534210ceb83 # v2.49.50
         with:
           tool: cargo-clone,cross
 
@@ -137,7 +137,7 @@ jobs:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        uses: taiki-e/install-action@09dc018eee06ae1c9e0409786563f534210ceb83 # v2.49.50
         with:
           tool: cargo-clone,cross
 

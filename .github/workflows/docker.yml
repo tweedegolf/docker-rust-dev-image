@@ -61,6 +61,12 @@ jobs:
 
       - name: install cross compile tools
         run: |
+          cat <<- 'EOF' | sudo tee -a /etc/apt/sources.list
+          deb [arch=arm64] http://ports.ubuntu.com/ jammy main multiverse universe
+          deb [arch=arm64] http://ports.ubuntu.com/ jammy-security main multiverse universe
+          deb [arch=arm64] http://ports.ubuntu.com/ jammy-backports main multiverse universe
+          deb [arch=arm64] http://ports.ubuntu.com/ jammy-updates main multiverse universe
+          EOF
           sudo dpkg --add-architecture ${{ matrix.docker_arch }}
           sudo apt update || true
           sudo apt install -y \

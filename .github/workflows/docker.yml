@@ -38,6 +38,77 @@ jobs:
           path: diesel_cli/target/diesel.${{ matrix.docker_arch }}
           if-no-files-found: error
 
+  prebuild-dioxus:
+    strategy:
+      matrix:
+        include:
+          - rust_arch: aarch64-unknown-linux-musl
+            docker_arch: arm64
+          - rust_arch: x86_64-unknown-linux-musl
+            docker_arch: amd64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@a54c7afa936fefeb4456b2dd8068152669aa8203
+        with:
+          toolchain: stable
+
+      - name: Install development tools
+        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        with:
+          tool: cargo-clone,cross
+
+      - name: Download and build dioxus-cli
+        run: |
+          cargo clone dioxus-cli
+          cd dioxus-cli
+          cross build --release --target ${{ matrix.rust_arch }}
+          mv target/${{ matrix.rust_arch }}/release/dx target/dx.${{ matrix.docker_arch }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        with:
+          name: artifact-dioxus-cli-${{ matrix.rust_arch }}
+          path: dioxus-cli/target/dx.${{ matrix.docker_arch }}
+          if-no-files-found: error
+
+  prebuild-sqlx:
+    strategy:
+      matrix:
+        include:
+          - rust_arch: aarch64-unknown-linux-musl
+            docker_arch: arm64
+          - rust_arch: x86_64-unknown-linux-musl
+            docker_arch: amd64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@a54c7afa936fefeb4456b2dd8068152669aa8203
+        with:
+          toolchain: stable
+
+      - name: Install development tools
+        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
+        with:
+          tool: cargo-clone,cross
+
+      - name: Download and build sqlx-cli
+        run: |
+          cargo clone sqlx-cli
+          cd sqlx-cli
+          cross build --release --target ${{ matrix.rust_arch }}
+          mv target/${{ matrix.rust_arch }}/release/sqlx target/sqlx.${{ matrix.docker_arch }}
+          mv target/${{ matrix.rust_arch }}/release/cargo-sqlx target/cargo-sqlx.${{ matrix.docker_arch }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        with:
+          name: artifact-sqlx-cli-${{ matrix.rust_arch }}
+          path: |
+            sqlx-cli/target/sqlx.${{ matrix.docker_arch }}
+            sqlx-cli/target/cargo-sqlx.${{ matrix.docker_arch }}
+          if-no-files-found: error
+
   prebuild-cargo-llvm-lines:
     strategy:
       matrix:
@@ -73,7 +144,7 @@ jobs:
           if-no-files-found: error
 
   build:
-    needs: [prebuild-diesel, prebuild-cargo-llvm-lines]
+    needs: [prebuild-diesel, prebuild-cargo-llvm-lines, prebuild-dioxus, prebuild-sqlx]
     env:
       node_version: "22"
     strategy:

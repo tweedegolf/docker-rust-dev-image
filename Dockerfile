@@ -123,6 +123,9 @@ RUN set -eux; \
 
 COPY diesel.$TARGETARCH /usr/local/cargo/bin/diesel
 COPY cargo-llvm-lines.$TARGETARCH /usr/local/cargo/bin/cargo-llvm-lines
+COPY dx.$TARGETARCH /usr/local/cargo/bin/dx
+COPY sqlx.$TARGETARCH /usr/local/cargo/bin/sqlx
+COPY cargo-sqlx.$TARGETARCH /usr/local/cargo/bin/cargo-sqlx
 
 RUN set -eux; \
     chmod +x /usr/local/cargo/bin/diesel; \
@@ -147,10 +150,9 @@ RUN set -eux; \
         trunk \
         mdbook \
         wasm-bindgen-cli \
-        sqlx-cli \
-        dioxus-cli \
     ; \
     sqlx --version; \
+    dx --version; \
     wasm-bindgen --version; \
     mdbook --version; \
     trunk --version; \

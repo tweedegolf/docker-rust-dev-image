@@ -32,7 +32,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/diesel target/diesel.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: artifact-diesel-${{ matrix.rust_arch }}
           path: diesel_cli/target/diesel.${{ matrix.docker_arch }}
@@ -66,7 +66,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/dx target/dx.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: artifact-dioxus-cli-${{ matrix.rust_arch }}
           path: dioxus-cli/target/dx.${{ matrix.docker_arch }}
@@ -101,7 +101,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/cargo-sqlx target/cargo-sqlx.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: artifact-sqlx-cli-${{ matrix.rust_arch }}
           path: |
@@ -137,7 +137,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/cargo-llvm-lines target/cargo-llvm-lines.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: artifact-cargo-llvm-lines-${{ matrix.rust_arch }}
           path: cargo-llvm-lines/target/cargo-llvm-lines.${{ matrix.docker_arch }}

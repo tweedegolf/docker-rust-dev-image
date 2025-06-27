@@ -153,6 +153,7 @@ RUN set -eux; \
         trunk \
         mdbook \
         wasm-bindgen-cli \
+        watchexec-cli \
     ; \
     sqlx --version; \
     dx --version; \
@@ -168,7 +169,8 @@ RUN set -eux; \
     cargo outdated --version; \
     cargo audit --version; \
     diesel --version; \
-    cargo llvm-lines --version;
+    cargo llvm-lines --version; \
+    watchexec --version;
 
 ARG CARGO_UDEPS_VERSION
 ENV CARGO_UDEPS_VERSION=${CARGO_UDEPS_VERSION}

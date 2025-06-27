@@ -169,7 +169,11 @@ jobs:
           if-no-files-found: error
 
   build:
-    needs: [prebuild-diesel, prebuild-cargo-llvm-lines, prebuild-dioxus, prebuild-sqlx]
+    needs:
+      - prebuild-diesel
+      - prebuild-cargo-llvm-lines
+      - prebuild-dioxus
+      - prebuild-sqlx
     env:
       node_version: "22"
     strategy:
@@ -181,9 +185,9 @@ jobs:
             latest: false
           - version: nightly
             latest: false
-          - version: "1.86"
+          - version: "1.88"
             latest: true
-          - version: "1.85"
+          - version: "1.87"
             latest: false
     runs-on: ubuntu-latest
     steps:

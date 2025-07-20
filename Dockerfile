@@ -22,6 +22,7 @@ RUN set -eux; \
         libpq-dev \
         libsqlite3-dev \
         binaryen \
+        musl-tools \
         crossbuild-essential-amd64 \
         crossbuild-essential-arm64 \
     ; \

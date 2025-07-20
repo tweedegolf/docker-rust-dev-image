@@ -123,7 +123,6 @@ RUN set -eux; \
 
 COPY diesel.$TARGETARCH /usr/local/cargo/bin/diesel
 COPY cargo-llvm-lines.$TARGETARCH /usr/local/cargo/bin/cargo-llvm-lines
-COPY dx.$TARGETARCH /usr/local/cargo/bin/dx
 COPY sqlx.$TARGETARCH /usr/local/cargo/bin/sqlx
 COPY cargo-sqlx.$TARGETARCH /usr/local/cargo/bin/cargo-sqlx
 
@@ -135,8 +134,8 @@ RUN set -eux; \
     chmod +x /usr/local/cargo/bin/cargo-sqlx; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
-        amd64) set -- --targets x86_64-unknown-linux-gnu --targets x86_64-unknown-linux-musl ;; \
-        arm64) set -- --targets aarch64-unknown-linux-gnu --targets aarch64-unknown-linux-musl ;; \
+        amd64) set -- --targets x86_64-unknown-linux-musl --targets x86_64-unknown-linux-gnu ;; \
+        arm64) set -- --targets aarch64-unknown-linux-musl --targets aarch64-unknown-linux-gnu ;; \
         *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \
     esac; \
     cargo binstall "$@" --no-confirm \
@@ -156,7 +155,6 @@ RUN set -eux; \
         watchexec-cli \
     ; \
     sqlx --version; \
-    dx --version; \
     wasm-bindgen --version; \
     mdbook --version; \
     trunk --version; \

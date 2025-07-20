@@ -38,65 +38,6 @@ jobs:
           path: diesel_cli/target/diesel.${{ matrix.docker_arch }}
           if-no-files-found: error
 
-  prebuild-dioxus:
-    strategy:
-      matrix:
-        include:
-          - rust_arch: aarch64-unknown-linux-gnu
-            docker_arch: arm64
-            debian_lib_arch: aarch64
-          - rust_arch: x86_64-unknown-linux-gnu
-            docker_arch: amd64
-            debian_lib_arch: amd64
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@a54c7afa936fefeb4456b2dd8068152669aa8203
-        with:
-          toolchain: stable
-          targets: ${{ matrix.rust_arch }}
-
-      - name: Install development tools
-        uses: taiki-e/install-action@e26ea2a159162f8642fb555c0ed314d81e839c2d # v2.47.14
-        with:
-          tool: cargo-clone
-
-      - name: install cross compile tools
-        run: |
-          cat <<- 'EOF' | sudo tee -a /etc/apt/sources.list
-          deb [arch=arm64] http://ports.ubuntu.com/ jammy main multiverse universe
-          deb [arch=arm64] http://ports.ubuntu.com/ jammy-security main multiverse universe
-          deb [arch=arm64] http://ports.ubuntu.com/ jammy-backports main multiverse universe
-          deb [arch=arm64] http://ports.ubuntu.com/ jammy-updates main multiverse universe
-          EOF
-          sudo dpkg --add-architecture ${{ matrix.docker_arch }}
-          sudo apt update || true
-          sudo apt install -y \
-            crossbuild-essential-${{ matrix.docker_arch }} \
-            libssl-dev:${{ matrix.docker_arch }} \
-            liblzma-dev:${{ matrix.docker_arch }}
-
-      - name: Download and build dioxus-cli
-        run: |
-          cargo clone dioxus-cli
-          cd dioxus-cli
-          mkdir .cargo
-          cat <<- 'EOF' > .cargo/config.toml
-          [target.aarch64-unknown-linux-gnu]
-          linker = "aarch64-linux-gnu-gcc"
-          EOF
-          export PKG_CONFIG_ALLOW_CROSS=1
-          export PKG_CONFIG_PATH=/usr/lib/${{ matrix.debian_lib_arch }}-linux-gnu/pkgconfig
-          cargo build --release --target ${{ matrix.rust_arch }}
-          mv target/${{ matrix.rust_arch }}/release/dx target/dx.${{ matrix.docker_arch }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
-        with:
-          name: artifact-dioxus-cli-${{ matrix.rust_arch }}
-          path: dioxus-cli/target/dx.${{ matrix.docker_arch }}
-          if-no-files-found: error
-
   prebuild-sqlx:
     strategy:
       matrix:
@@ -172,7 +113,6 @@ jobs:
     needs:
       - prebuild-diesel
       - prebuild-cargo-llvm-lines
-      - prebuild-dioxus
       - prebuild-sqlx
     env:
       node_version: "22"

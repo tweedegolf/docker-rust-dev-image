@@ -129,7 +129,6 @@ COPY cargo-sqlx.$TARGETARCH /usr/local/cargo/bin/cargo-sqlx
 RUN set -eux; \
     chmod +x /usr/local/cargo/bin/diesel; \
     chmod +x /usr/local/cargo/bin/cargo-llvm-lines; \
-    chmod +x /usr/local/cargo/bin/dx; \
     chmod +x /usr/local/cargo/bin/sqlx; \
     chmod +x /usr/local/cargo/bin/cargo-sqlx; \
     dpkgArch="$(dpkg --print-architecture)"; \

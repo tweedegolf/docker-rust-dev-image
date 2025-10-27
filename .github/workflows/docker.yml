@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@b3b07ba8b418998c39fb20f53e8b695cdcc8de1b
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921
         with:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@c99cc51b309eee71a866715cfa08c922f11cf898 # v2.56.19
+        uses: taiki-e/install-action@c5b1b6f479c32f356cc6f4ba672a47f63853b13b # v2.62.38
         with:
           tool: cargo-clone,cross
 
@@ -32,7 +32,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/diesel target/diesel.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: artifact-diesel-${{ matrix.rust_arch }}
           path: diesel_cli/target/diesel.${{ matrix.docker_arch }}
@@ -49,12 +49,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@b3b07ba8b418998c39fb20f53e8b695cdcc8de1b
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921
         with:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@c99cc51b309eee71a866715cfa08c922f11cf898 # v2.56.19
+        uses: taiki-e/install-action@c5b1b6f479c32f356cc6f4ba672a47f63853b13b # v2.62.38
         with:
           tool: cargo-clone,cross
 
@@ -67,7 +67,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/cargo-sqlx target/cargo-sqlx.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: artifact-sqlx-cli-${{ matrix.rust_arch }}
           path: |
@@ -86,12 +86,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Rust toolchain
-        uses: dtolnay/rust-toolchain@b3b07ba8b418998c39fb20f53e8b695cdcc8de1b
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921
         with:
           toolchain: stable
 
       - name: Install development tools
-        uses: taiki-e/install-action@c99cc51b309eee71a866715cfa08c922f11cf898 # v2.56.19
+        uses: taiki-e/install-action@c5b1b6f479c32f356cc6f4ba672a47f63853b13b # v2.62.38
         with:
           tool: cargo-clone,cross
 
@@ -103,7 +103,7 @@ jobs:
           mv target/${{ matrix.rust_arch }}/release/cargo-llvm-lines target/cargo-llvm-lines.${{ matrix.docker_arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: artifact-cargo-llvm-lines-${{ matrix.rust_arch }}
           path: cargo-llvm-lines/target/cargo-llvm-lines.${{ matrix.docker_arch }}
@@ -147,10 +147,10 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Download prebuild binaries
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           pattern: artifact-*
           merge-multiple: true

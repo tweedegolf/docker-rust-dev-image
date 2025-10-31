@@ -125,9 +125,9 @@ jobs:
             latest: false
           - version: nightly
             latest: false
-          - version: "1.89"
+          - version: "1.91"
             latest: true
-          - version: "1.88"
+          - version: "1.90"
             latest: false
     runs-on: ubuntu-latest
     steps:
@@ -167,18 +167,18 @@ jobs:
           # Cargo-udeps version from https://github.com/est31/cargo-udeps/releases
           # All packages use x86_64-unknown-linux-musl and aarch64-unknown-linux-musl
           build-args: |
-            RUSTUP_VERSION=1.28.1
-            RUSTUP_SHA256_AMD64=a3339fb004c3d0bb9862ba0bce001861fe5cbde9c10d16591eb3f39ee6cd3e7f
-            RUSTUP_SHA256_ARM64=c64b33db2c6b9385817ec0e49a84bcfe018ed6e328fe755c3c809580cc70ce7a
-            CARGO_BINSTALL_VERSION=1.12.3
-            CARGO_BINSTALL_SHA256_AMD64=deeee17791719fc544dd1f542d4a482da70ea4ebfddf414d3ca27e5dc12242e3
-            CARGO_BINSTALL_SHA256_ARM64=7b4061abf34550ad1be68fe9f36dc9347b1edabe6275eee19b1c1c495ccb9c69
-            SCCACHE_VERSION=0.10.0
-            SCCACHE_SHA256_AMD64=1fbb35e135660d04a2d5e42b59c7874d39b3deb17de56330b25b713ec59f849b
-            SCCACHE_SHA256_ARM64=d6a1ce4acd02b937cd61bc675a8be029a60f7bc167594c33d75732bbc0a07400
-            CARGO_UDEPS_VERSION=0.1.55
-            CARGO_UDEPS_SHA256_AMD64=63b9dd69eef610477ead31a02a8262ec321a0e0272080c8db60d547233b2b55f
-            CARGO_UDEPS_SHA256_ARM64=a7b554ce1ad67e7e2c7679496c6bc4e57e35a36be50300670314fa3879405b2a
+            RUSTUP_VERSION=1.28.2
+            RUSTUP_SHA256_AMD64=20a06e644b0d9bd2fbdbfd52d42540bdde820ea7df86e92e533c073da0cdd43c
+            RUSTUP_SHA256_ARM64=e3853c5a252fca15252d07cb23a1bdd9377a8c6f3efa01531109281ae47f841c
+            CARGO_BINSTALL_VERSION=1.15.9
+            CARGO_BINSTALL_SHA256_AMD64=4aa0d88fdf39abd7444d3475f3bf4100bc5d498a3113339990a65dd2f9e40255
+            CARGO_BINSTALL_SHA256_ARM64=6c7da9456b0a1c947e21f20bc71b23fe15ded57ffb6375f67c011cae38aad0dc
+            SCCACHE_VERSION=0.12.0
+            SCCACHE_SHA256_AMD64=b0e89ead6899224a4ba2b90e9073bf1ce036d95bab30f3dc33c1e1468bc4ad44
+            SCCACHE_SHA256_ARM64=111ddd28fb108cb3e17edb69ab62cefe1dcc97b02e5006ff9c1330f4f2e78368
+            CARGO_UDEPS_VERSION=0.1.59
+            CARGO_UDEPS_SHA256_AMD64=8da5675e785909b943e2d44859917e9b26e746d0674e6ab52a8155f7506a98c2
+            CARGO_UDEPS_SHA256_ARM64=0b0da6cd9dd39cf6670fd23f3e4e12ef76dab4ba5e5f614af05b1ddfe78e8425
             RUST_VERSION=${{matrix.version}}
           tags: |
             ghcr.io/tweedegolf/rust-dev:${{matrix.version}}

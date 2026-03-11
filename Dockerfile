@@ -1,4 +1,4 @@
-FROM ghcr.io/tweedegolf/debian:bookworm
+FROM ghcr.io/tweedegolf/debian:trixie
 
 ARG TARGETARCH
 
